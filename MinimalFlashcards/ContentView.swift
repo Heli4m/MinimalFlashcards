@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var flashCards: [FlashcardModel] = []
-    @State private var flashCardViews: [Flashcard] = []
     @State private var selectedTab: TabEnum = .createPage
     
     var body: some View {
@@ -20,6 +19,9 @@ struct ContentView: View {
                 }
             }
             .tag(TabEnum.createPage)
+            
+            FlashcardPage(flashCards: $flashCards)
+                .tag(TabEnum.flashCardPage)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .ignoresSafeArea()

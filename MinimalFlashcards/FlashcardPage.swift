@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FlashCardPage: View {
+struct FlashcardPage: View {
     @Binding var flashCards: [FlashcardModel]
     var body: some View {
         ZStack {
@@ -35,7 +35,7 @@ struct FlashCardPage: View {
 }
 
 #Preview {
-    FlashCardPage(flashCards: .constant([
+    FlashcardPage(flashCards: .constant([
         FlashcardModel(clue: "Hello", answer: "Bonjour"),
         FlashcardModel(clue: "Apple", answer: "Pomme"),
         FlashcardModel(clue: "House", answer: "Maison")

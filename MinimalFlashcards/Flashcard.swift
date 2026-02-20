@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct Flashcard: View {
-    let id = UUID()
     let clue: String
     let answer: String
     @State private var rotation: Double = 0
@@ -16,25 +15,34 @@ struct Flashcard: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .frame(width: 300, height: 400)
-                .foregroundStyle(Config.Colors.item)
-                .onTapGesture { tap in
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        rotation += 180
-                        isFlipped.toggle()
-                    }
-                }
-                .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))
+            CardFace(text: clue)
+                .opacity(isFlipped ? 0 : 1)
             
-            if isFlipped {
-                LexendMediumText(text: answer, size: 20)
-                    .foregroundStyle(Config.Colors.primaryText)
-            } else if !isFlipped {
-                LexendMediumText(text: clue, size: 20)
-                    .foregroundStyle(Config.Colors.primaryText)
+            CardFace(text: answer)
+                .opacity(isFlipped ? 1 : 0)
+                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+        }
+        .frame(width: 300, height: 400)
+        .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+        .onTapGesture {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                isFlipped.toggle()
             }
         }
+    }
+}
+
+struct CardFace: View {
+    let text: String
+    var body: some View {
+        RoundedRectangle(cornerRadius: 20)
+            .frame(width: 300, height: 400)
+            .foregroundStyle(Config.Colors.item)
+            .overlay {
+                LexendMediumText(text: text, size: 20)
+                    .foregroundStyle(Config.Colors.primaryText)
+                    .padding()
+            }
     }
 }
 
