@@ -20,6 +20,9 @@ struct Config {
         
         static let primaryText = Color(red: 232/255, green: 234/255, blue: 237/255)
         static let secondaryText = Color(red: 154/255, green: 160/255, blue: 166/255)
+        
+        static let successGreen = Color(red: 74/255, green: 222/255, blue: 128/255)
+        static let errorRed = Color(red: 251/255, green: 113/255, blue: 133/255)
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FlashcardModel {
+struct FlashcardModel: Identifiable, Codable{
     let id: UUID = UUID()
     let clue: String
     let answer: String

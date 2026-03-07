@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SwipeWrapper<Content: View>: View {
+    @Binding var wrongCount: Int
+    @Binding var correctCount: Int
     var onRemove: () -> Void
     let content: () -> Content
     
@@ -28,8 +30,15 @@ struct SwipeWrapper<Content: View>: View {
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                                                onRemove()
-                                                            }
+                                    if value.translation.width > 100 {
+                                        correctCount += 1
+                                    } else if value.translation.width < -100 {
+                                        wrongCount += 1
+                                    }
+                                    onRemove()
+                                    offset = .zero
+                                }
+                                
                             } else {
                                 withAnimation(.spring) { offset = .zero}
                             }
