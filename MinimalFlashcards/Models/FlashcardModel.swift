@@ -8,7 +8,7 @@
 import Foundation
 
 struct FlashcardModel: Identifiable, Codable{
-    let id: UUID = UUID()
+    let id = UUID()
     let clue: String
     let answer: String
 }

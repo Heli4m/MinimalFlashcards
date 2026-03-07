@@ -13,6 +13,7 @@ struct TextInput: View {
     @State private var error: Bool = false
     
     @Binding var flashCards: [FlashcardModel]
+    @Binding var storedflashCards: [FlashcardModel]
     
     let onGenerateCards: () -> Void
     
@@ -66,6 +67,7 @@ struct TextInput: View {
         }
         
         self.flashCards = newCards
+        self.storedflashCards = newCards
         onGenerateCards()
     }
 }

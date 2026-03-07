@@ -14,7 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            TextInput(flashCards: $flashCards) {
+            TextInput(flashCards: $flashCards, storedflashCards: $storedflashCards) {
                 withAnimation {
                     selectedTab = .flashCardPage
                 }
