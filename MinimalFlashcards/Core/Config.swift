@@ -22,3 +22,9 @@ struct Config {
         static let secondaryText = Color(red: 154/255, green: 160/255, blue: 166/255)
     }
 }
+
+
+enum TabEnum {
+    case createPage
+    case flashCardPage
+}
