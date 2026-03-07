@@ -17,6 +17,14 @@ struct SwipeWrapper<Content: View>: View {
     
     var body: some View {
         ZStack {
+            Color.green
+                .opacity(offset.width > 100 && offset.width < 1000 ? offset.width * 0.001 : 0)
+                .allowsHitTesting(false)
+            
+            Color.red
+                .opacity(offset.width < -100 && offset.width > -1000 ? abs(offset.width) * 0.001 : 0)
+                .allowsHitTesting(false)
+            
             content()
                 .offset(x: offset.width, y: offset.height * 0.4)
                 .rotationEffect(.degrees(Double(offset.width / 30)))
@@ -44,12 +52,6 @@ struct SwipeWrapper<Content: View>: View {
                             }
                         }
                 )
-            
-            Color.green
-                .opacity(offset.width > 100 ? 0.3 : 0)
-            
-            Color.red
-                .opacity(offset.width < -100 ? 0.3 : 0)
         }
         .ignoresSafeArea()
     }
