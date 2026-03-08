@@ -12,6 +12,7 @@ struct SwipeWrapper<Content: View>: View {
     @Binding var correctCount: Int
     var onRemove: () -> Void
     let content: () -> Content
+    @State private var hasPlayedHaptics: Bool = false
     
     @State private var offset: CGSize = .zero
     
@@ -30,7 +31,16 @@ struct SwipeWrapper<Content: View>: View {
                 .rotationEffect(.degrees(Double(offset.width / 30)))
                 .gesture(
                     DragGesture()
-                        .onChanged { offset = $0.translation }
+                        .onChanged { value in
+                            offset = value.translation
+                            
+                            if abs(value.translation.width) > 100 && !hasPlayedHaptics {
+                                Haptics.trigger(.light)
+                                hasPlayedHaptics = true
+                            } else if abs(value.translation.width) < 100 {
+                                hasPlayedHaptics = false
+                            }
+                        }
                         .onEnded { value in
                             if abs(value.translation.width) > 100 {
                                 withAnimation(.easeInOut(duration: 0.3)) {
