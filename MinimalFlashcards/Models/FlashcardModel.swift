@@ -12,3 +12,9 @@ struct FlashcardModel: Identifiable, Codable{
     let clue: String
     let answer: String
 }
+
+struct DeckModel {
+    let name: String
+    let flashcards: [FlashcardModel]
+    let personalBest: Int
+}
