@@ -27,8 +27,10 @@ struct Config {
 }
 
 
-enum TabEnum {
+enum TabEnum: String, Identifiable {
     case createPage
     case deckPage
     case flashCardPage
+    
+    var id: String { self.rawValue }
 }

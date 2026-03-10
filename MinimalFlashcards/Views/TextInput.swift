@@ -11,9 +11,13 @@ struct TextInput: View {
     @State private var text: String = ""
     @State private var textDict: [String: String] = [:]
     @State private var error: Bool = false
+    @State private var isNaming: Bool = false
+    @State private var deckName: String = ""
     
     @Binding var flashCards: [FlashcardModel]
     @Binding var storedflashCards: [FlashcardModel]
+    @Binding var decks: [DeckModel]
+    @Binding var selectedTab: TabEnum
     
     let onGenerateCards: () -> Void
     
@@ -41,9 +45,21 @@ struct TextInput: View {
                         }
                 }
             }
-            
         }
+        .sheet(isPresented: $isNaming) {
+            DeckEditSheet(deckName: $deckName) {
+                let newDeck = DeckModel(name: deckName, flashcards: flashCards, personalBest: 0)
+                
+                decks.append(newDeck)
+                
+                isNaming = false
+                text = ""
+                deckName = ""
+            }
+        }
+        
     }
+    
     
     func gatherText() {
         let lines = text.components(separatedBy: ",")
@@ -68,6 +84,7 @@ struct TextInput: View {
         
         self.flashCards = newCards
         self.storedflashCards = newCards
+        self.isNaming = true
         onGenerateCards()
     }
 }
