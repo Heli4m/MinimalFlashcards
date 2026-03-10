@@ -13,7 +13,8 @@ struct FlashcardModel: Identifiable, Codable{
     let answer: String
 }
 
-struct DeckModel {
+struct DeckModel: Identifiable {
+    let id = UUID()
     let name: String
     let flashcards: [FlashcardModel]
     let personalBest: Int

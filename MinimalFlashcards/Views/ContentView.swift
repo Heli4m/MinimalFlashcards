@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var decks: [DeckModel] = []
     @State private var flashCards: [FlashcardModel] = []
     @State private var storedflashCards: [FlashcardModel] = []
     @State private var selectedTab: TabEnum = .createPage
@@ -20,6 +21,10 @@ struct ContentView: View {
                 }
             }
             .tag(TabEnum.createPage)
+            
+            DeckView(decks: decks)
+                .tag(TabEnum.deckPage)
+            
             
             FlashcardPage(
                 flashCards: $flashCards,

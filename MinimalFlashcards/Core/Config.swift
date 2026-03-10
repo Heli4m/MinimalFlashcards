@@ -29,5 +29,6 @@ struct Config {
 
 enum TabEnum {
     case createPage
+    case deckPage
     case flashCardPage
 }
