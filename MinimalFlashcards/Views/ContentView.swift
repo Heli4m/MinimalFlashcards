@@ -22,8 +22,15 @@ struct ContentView: View {
             }
             .tag(TabEnum.createPage)
             
-            DeckView(decks: decks)
-                .tag(TabEnum.deckPage)
+            DeckView(decks: decks) { deck in
+                self.flashCards = deck.flashcards
+                self.storedflashCards = deck.flashcards
+                
+                withAnimation {
+                    selectedTab = .flashCardPage
+                }
+            }
+            .tag(TabEnum.deckPage)
             
             
             FlashcardPage(
