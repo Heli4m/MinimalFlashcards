@@ -41,9 +41,27 @@ struct ContentView: View {
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .ignoresSafeArea()
-        
+        .onAppear {
+            loadDecks()
+        }
+        .onChange(of: decks) { _ in
+            saveDecks()
+        }
     }
     
+    func saveDecks() {
+        if let encoded = try? JSONEncoder().encode(decks) {
+            UserDefaults.standard.set(encoded, forKey: "decks")
+        }
+    }
+    
+    func loadDecks() {
+        if let data = UserDefaults.standard.data(forKey: "decks") {
+            if let decoded = try? JSONDecoder().decode([DeckModel].self, from: data) {
+                decks = decoded
+            }
+        }
+    }
 }
 
 #Preview {

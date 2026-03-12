@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct FlashcardModel: Identifiable, Codable{
-    let id = UUID()
+struct FlashcardModel: Identifiable, Codable, Equatable {
+    var id = UUID()
     let clue: String
     let answer: String
 }
 
-struct DeckModel: Identifiable {
-    let id = UUID()
+struct DeckModel: Identifiable, Codable, Equatable {
+    var id = UUID()
     let name: String
     let flashcards: [FlashcardModel]
-    let personalBest: Int
+    var personalBest: Int
 }
