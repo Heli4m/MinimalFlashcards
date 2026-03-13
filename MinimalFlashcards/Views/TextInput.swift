@@ -13,6 +13,7 @@ struct TextInput: View {
     @State private var error: Bool = false
     @State private var isNaming: Bool = false
     @State private var deckName: String = ""
+    @State private var showingAlert: Bool = false
     
     @Binding var flashCards: [FlashcardModel]
     @Binding var storedflashCards: [FlashcardModel]
@@ -57,6 +58,19 @@ struct TextInput: View {
                                     .foregroundStyle(error ? Config.Colors.highPriority : Config.Colors.primaryText)
                             }
                     }
+                    
+                    Button {
+                        showingAlert = true
+                    } label: {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundStyle(Config.Colors.highPriority)
+                            .frame(width: 75, height: 75)
+                            .overlay {
+                                Image(systemName: "trash")
+                                    .font(.system(size: 35))
+                                    .foregroundStyle(Config.Colors.primaryText)
+                            }
+                    }
                 }
                 .padding(.top)
             }
@@ -72,7 +86,15 @@ struct TextInput: View {
                 deckName = ""
             }
         }
-        
+        .alert("Clear all texts?", isPresented: $showingAlert) {
+            Button ("Cancel", role: .cancel) {
+                
+            }
+            
+            Button ("Delete", role: .destructive) {
+                text = ""
+            }
+        }
     }
     
     
