@@ -28,22 +28,37 @@ struct TextInput: View {
             VStack {
                 LexendMediumText(text: "Input text with formatting", size: 24)
                     .foregroundStyle(Config.Colors.primaryText)
+                    .padding(.top)
                 
                 textInput
                 
-                Button {
-                    gatherText()
-                } label: {
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundStyle(Config.Colors.accent)
-                        .frame(width: 200, height: 75)
-                        .padding(.top)
-                        .overlay {
-                            LexendMediumText(text: "Submit", size: 30)
-                                .foregroundStyle(error ? Config.Colors.highPriority : Config.Colors.primaryText)
-                                .padding(.top)
-                        }
+                HStack {
+                    Button {
+                        pasteText()
+                    } label: {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundStyle(Config.Colors.item)
+                            .frame(width: 75, height: 75)
+                            .overlay {
+                                Image(systemName: "clipboard")
+                                    .font(.system(size: 35))
+                                    .foregroundStyle(Config.Colors.primaryText)
+                            }
+                    }
+                    
+                    Button {
+                        gatherText()
+                    } label: {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundStyle(Config.Colors.accent)
+                            .frame(width: 200, height: 75)
+                            .overlay {
+                                LexendMediumText(text: "Submit", size: 30)
+                                    .foregroundStyle(error ? Config.Colors.highPriority : Config.Colors.primaryText)
+                            }
+                    }
                 }
+                .padding(.top)
             }
         }
         .sheet(isPresented: $isNaming) {
@@ -87,6 +102,16 @@ struct TextInput: View {
         self.isNaming = true
         onGenerateCards()
     }
+    
+    func pasteText() {
+        if let clipboardText = UIPasteboard.general.string {
+            if self.text.isEmpty {
+                self.text = clipboardText
+            } else {
+                self.text += ",\n" + clipboardText
+            }
+        }
+    }
 }
 
 private extension TextInput {
@@ -103,4 +128,16 @@ private extension TextInput {
                     .foregroundStyle(Config.Colors.item)
             }
     }
+}
+
+#Preview {
+    TextInput(
+        flashCards: .constant([]),
+        storedflashCards: .constant([]),
+        decks: .constant([]),
+        selectedTab: .constant(.createPage),
+        onGenerateCards: {
+            print("Cards generated!")
+        }
+    )
 }
