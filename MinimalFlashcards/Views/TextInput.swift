@@ -17,6 +17,7 @@ struct TextInput: View {
     
     @Binding var flashCards: [FlashcardModel]
     @Binding var storedflashCards: [FlashcardModel]
+    @Binding var activeDeck: UUID?
     @Binding var decks: [DeckModel]
     @Binding var selectedTab: TabEnum
     
@@ -80,12 +81,14 @@ struct TextInput: View {
                 let newDeck = DeckModel(name: deckName, flashcards: flashCards, personalBest: 0)
                 
                 decks.append(newDeck)
+                activeDeck = newDeck.id
                 
                 isNaming = false
                 text = ""
                 deckName = ""
             }
         }
+        
         .alert("Clear all texts?", isPresented: $showingAlert) {
             Button ("Cancel", role: .cancel) {
                 
@@ -156,6 +159,7 @@ private extension TextInput {
     TextInput(
         flashCards: .constant([]),
         storedflashCards: .constant([]),
+        activeDeck: .constant(UUID()),
         decks: .constant([]),
         selectedTab: .constant(.createPage),
         onGenerateCards: {
