@@ -13,6 +13,8 @@ struct FlashcardPage: View {
     @State private var wrongCount: Int = 0
     @State private var correctCount: Int = 0
     
+    let onReturnPercentage: (Int) -> Void
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -61,6 +63,12 @@ struct FlashcardPage: View {
                                 }
                         }
                     }
+                    .onAppear {
+                        if !storedflashCards.isEmpty {
+                            let percentage = (Double(correctCount) / Double(storedflashCards.count)) * 100
+                            onReturnPercentage(Int(percentage))
+                        }
+                    }
                 } else {
                     ZStack {
                         ForEach(flashCards) { card in
@@ -95,6 +103,9 @@ struct FlashcardPage: View {
             FlashcardModel(clue: "Apple", answer: "Pomme"),
             FlashcardModel(clue: "House", answer: "Maison")
         ]),
+        onReturnPercentage: { percentage in
+            print("\(percentage)")
+        }
     )
 }
 

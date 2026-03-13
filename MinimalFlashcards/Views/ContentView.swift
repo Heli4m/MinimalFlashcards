@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var decks: [DeckModel] = []
+    @State private var activeDeck: UUID? = nil
     @State private var flashCards: [FlashcardModel] = []
     @State private var storedflashCards: [FlashcardModel] = []
     @State private var selectedTab: TabEnum = .createPage
@@ -25,6 +26,7 @@ struct ContentView: View {
             DeckView(decks: decks) { deck in
                 self.flashCards = deck.flashcards
                 self.storedflashCards = deck.flashcards
+                self.activeDeck = deck.id
                 
                 withAnimation {
                     selectedTab = .flashCardPage
@@ -36,7 +38,13 @@ struct ContentView: View {
             FlashcardPage(
                 flashCards: $flashCards,
                 storedflashCards: $storedflashCards
-            )
+            ) { percentage in
+                if let index = decks.firstIndex(where: { $0.id == activeDeck }) {
+                    if percentage > decks[index].personalBest {
+                        decks[index].personalBest = percentage
+                    }
+                }
+            }
             .tag(TabEnum.flashCardPage)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
@@ -44,7 +52,7 @@ struct ContentView: View {
         .onAppear {
             loadDecks()
         }
-        .onChange(of: decks) { _ in
+        .onChange(of: decks) {
             saveDecks()
         }
     }
