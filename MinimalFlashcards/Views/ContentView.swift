@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var textInput: String = ""
     @State private var decks: [DeckModel] = []
+    @State private var editingDeck: UUID? = nil
     @State private var activeDeck: UUID? = nil
     @State private var flashCards: [FlashcardModel] = []
     @State private var storedflashCards: [FlashcardModel] = []
@@ -17,29 +19,43 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             TextInput(
+                text: $textInput,
                 flashCards: $flashCards,
                 storedflashCards: $storedflashCards,
                 activeDeck: $activeDeck,
                 decks: $decks,
                 selectedTab: $selectedTab,
+                editingDeck: $editingDeck,
             ) {
+                if editingDeck != nil {
+                    
+                }
+                
                 withAnimation {
                     selectedTab = .flashCardPage
                 }
             }
             .tag(TabEnum.createPage)
             
-            DeckView(decks: $decks) { deck in
-                let cards = deck.isShuffled ? deck.flashcards.shuffled() : deck.flashcards
-                
-                self.flashCards = cards
-                self.storedflashCards = cards
-                self.activeDeck = deck.id
-                
-                withAnimation {
-                    selectedTab = .flashCardPage
+            DeckView(
+                decks: $decks,
+                onStart: { deck in
+                    let cards = deck.isShuffled ? deck.flashcards.shuffled() : deck.flashcards
+                    
+                    self.flashCards = cards
+                    self.storedflashCards = cards
+                    self.activeDeck = deck.id
+                    
+                    withAnimation {
+                        selectedTab = .flashCardPage
+                    }
+                },
+                onEdit: { deck in
+                    textInput = deck.rawText
+                    selectedTab = .createPage
+                    editingDeck = deck.id
                 }
-            }
+            )
             .tag(TabEnum.deckPage)
             
             

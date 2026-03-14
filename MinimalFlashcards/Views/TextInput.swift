@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TextInput: View {
-    @State private var text: String = ""
+    @Binding var text: String
     @State private var textDict: [String: String] = [:]
     @State private var error: Bool = false
     @State private var isNaming: Bool = false
@@ -20,6 +20,7 @@ struct TextInput: View {
     @Binding var activeDeck: UUID?
     @Binding var decks: [DeckModel]
     @Binding var selectedTab: TabEnum
+    @Binding var editingDeck: UUID?
     
     let onGenerateCards: () -> Void
     
@@ -80,7 +81,7 @@ struct TextInput: View {
         }
         .sheet(isPresented: $isNaming) {
             DeckEditSheet(deckName: $deckName) {
-                let newDeck = DeckModel(name: deckName, flashcards: flashCards, personalBest: 0)
+                let newDeck = DeckModel(rawText: text, name: deckName, flashcards: flashCards, personalBest: 0)
                 
                 decks.append(newDeck)
                 activeDeck = newDeck.id
@@ -126,7 +127,17 @@ struct TextInput: View {
         
         self.flashCards = newCards
         self.storedflashCards = newCards
-        self.isNaming = true
+        if editingDeck == nil {
+            self.isNaming = true
+        } else {
+            if let index = decks.firstIndex(where: { $0.id == editingDeck }) {
+                decks[index].rawText = text
+                decks[index].flashcards = newCards
+            }
+            
+            text = ""
+            editingDeck = nil
+        }
         onGenerateCards()
     }
     
@@ -159,11 +170,13 @@ private extension TextInput {
 
 #Preview {
     TextInput(
+        text: .constant("Pommes : Fries"),
         flashCards: .constant([]),
         storedflashCards: .constant([]),
         activeDeck: .constant(UUID()),
         decks: .constant([]),
         selectedTab: .constant(.createPage),
+        editingDeck: .constant(UUID()),
         onGenerateCards: {
             print("Cards generated!")
         }

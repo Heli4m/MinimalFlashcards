@@ -15,8 +15,9 @@ struct FlashcardModel: Identifiable, Codable, Equatable {
 
 struct DeckModel: Identifiable, Codable, Equatable {
     var id = UUID()
+    var rawText: String
     let name: String
-    let flashcards: [FlashcardModel]
+    var flashcards: [FlashcardModel]
     var personalBest: Int
     var isShuffled: Bool = true
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct DeckView: View {
     @Binding var decks: [DeckModel]
     let onStart: (DeckModel) -> Void
+    let onEdit: (DeckModel) -> Void
     
     let columns = [
         GridItem(.flexible(), spacing: 15, alignment: .top),
@@ -53,6 +54,15 @@ struct DeckView: View {
                             
                         }
                         .contextMenu {
+                            Button {
+                                onEdit(deck)
+                            } label: {
+                                Label (
+                                    "Edit Deck",
+                                    systemImage: "square.and.pencil"
+                                )
+                            }
+                            
                             Button {
                                 if let index = decks.firstIndex(where: { $0.id == deck.id }) {
                                     decks[index].isShuffled.toggle()
