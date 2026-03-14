@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DeckView: View {
-    let decks: [DeckModel]
+    @Binding var decks: [DeckModel]
     let onStart: (DeckModel) -> Void
     
     let columns = [
@@ -52,10 +52,26 @@ struct DeckView: View {
                                 }
                             
                         }
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                                    deleteDeck(selectedDeck: deck)
+                                }
+                                Haptics.trigger(.rigid)
+                            } label: {
+                                Label("", systemImage: "trash")
+                            }
+                        }
                     }
                 }
                 .padding()
             }
+        }
+    }
+    
+    func deleteDeck(selectedDeck: DeckModel) {
+        if let index = decks.firstIndex(where: { $0.id == selectedDeck.id }) {
+            decks.remove(at: index)
         }
     }
 }

@@ -40,20 +40,21 @@ struct TextInput: View {
                     } label: {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundStyle(Config.Colors.item)
-                            .frame(width: 75, height: 75)
+                            .frame(width: 70, height: 70)
                             .overlay {
                                 Image(systemName: "clipboard")
-                                    .font(.system(size: 35))
+                                    .font(.system(size: 30))
                                     .foregroundStyle(Config.Colors.primaryText)
                             }
                     }
+                    .padding(.trailing, 2)
                     
                     Button {
                         gatherText()
                     } label: {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundStyle(Config.Colors.accent)
-                            .frame(width: 200, height: 75)
+                            .frame(width: 175, height: 75)
                             .overlay {
                                 LexendMediumText(text: "Submit", size: 30)
                                     .foregroundStyle(error ? Config.Colors.highPriority : Config.Colors.primaryText)
@@ -65,13 +66,14 @@ struct TextInput: View {
                     } label: {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundStyle(Config.Colors.highPriority)
-                            .frame(width: 75, height: 75)
+                            .frame(width: 70, height: 70)
                             .overlay {
                                 Image(systemName: "trash")
-                                    .font(.system(size: 35))
+                                    .font(.system(size: 30))
                                     .foregroundStyle(Config.Colors.primaryText)
                             }
                     }
+                    .padding(.leading, 2)
                 }
                 .padding(.top)
             }

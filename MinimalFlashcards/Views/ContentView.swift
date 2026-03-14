@@ -29,7 +29,7 @@ struct ContentView: View {
             }
             .tag(TabEnum.createPage)
             
-            DeckView(decks: decks) { deck in
+            DeckView(decks: $decks) { deck in
                 self.flashCards = deck.flashcards
                 self.storedflashCards = deck.flashcards
                 self.activeDeck = deck.id
