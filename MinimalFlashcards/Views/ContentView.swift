@@ -39,6 +39,7 @@ struct ContentView: View {
             
             DeckView(
                 decks: $decks,
+                selectedTab: $selectedTab,
                 onStart: { deck in
                     let cards = deck.isShuffled ? deck.flashcards.shuffled() : deck.flashcards
                     
