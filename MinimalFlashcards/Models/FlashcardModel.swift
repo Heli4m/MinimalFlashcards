@@ -18,4 +18,5 @@ struct DeckModel: Identifiable, Codable, Equatable {
     let name: String
     let flashcards: [FlashcardModel]
     var personalBest: Int
+    var isShuffled: Bool = true
 }

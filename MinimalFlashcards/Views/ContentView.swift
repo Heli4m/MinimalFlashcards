@@ -30,8 +30,10 @@ struct ContentView: View {
             .tag(TabEnum.createPage)
             
             DeckView(decks: $decks) { deck in
-                self.flashCards = deck.flashcards
-                self.storedflashCards = deck.flashcards
+                let cards = deck.isShuffled ? deck.flashcards.shuffled() : deck.flashcards
+                
+                self.flashCards = cards
+                self.storedflashCards = cards
                 self.activeDeck = deck.id
                 
                 withAnimation {

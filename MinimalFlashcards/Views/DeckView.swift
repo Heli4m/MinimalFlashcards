@@ -53,13 +53,25 @@ struct DeckView: View {
                             
                         }
                         .contextMenu {
+                            Button {
+                                if let index = decks.firstIndex(where: { $0.id == deck.id }) {
+                                    decks[index].isShuffled.toggle()
+                                    Haptics.trigger(.light)
+                                }
+                            } label: {
+                                Label (
+                                    deck.isShuffled ? "Shuffle: ON" : "Shuffle: OFF",
+                                    systemImage: deck.isShuffled ? "shuffle" : "line.3.horizontal"
+                                )
+                            }
+                            
                             Button(role: .destructive) {
                                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                                     deleteDeck(selectedDeck: deck)
                                 }
                                 Haptics.trigger(.rigid)
                             } label: {
-                                Label("", systemImage: "trash")
+                                Label("Delete", systemImage: "trash")
                             }
                         }
                     }
