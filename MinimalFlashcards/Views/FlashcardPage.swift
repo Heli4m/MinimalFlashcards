@@ -141,9 +141,17 @@ struct CardFace: View {
             .frame(width: 300, height: 400)
             .foregroundStyle(Config.Colors.item)
             .overlay {
-                LexendMediumText(text: text, size: 20)
-                    .foregroundStyle(Config.Colors.primaryText)
-                    .padding()
+                if text.contains("$") {
+                    let cleanedText = text.replacingOccurrences(of: "$", with: "")
+                    
+                    MathView(latex: cleanedText)
+                        .frame(width: 260, height: 360)
+                        .allowsHitTesting(false)
+                } else {
+                    LexendMediumText(text: text, size: 20)
+                        .foregroundStyle(Config.Colors.primaryText)
+                        .padding()
+                }
             }
     }
 }

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TextInput: View {
+    @FocusState private var isInputActive: Bool
+    
     @Binding var text: String
     @State private var textDict: [String: String] = [:]
     @State private var error: Bool = false
@@ -34,6 +36,7 @@ struct TextInput: View {
                     .padding(.top)
                 
                 textInput
+                    .focused($isInputActive)
                 
                 HStack {
                     Button {
@@ -49,6 +52,21 @@ struct TextInput: View {
                     }
                 }
                 .padding(.top)
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                     
+                HStack {
+                    Button ("Done") {
+                        isInputActive = false
+                    }
+                    .font(Font.custom("Lexend-Medium", size: 16))
+                    .foregroundStyle(Config.Colors.accent)
+                }
+                .frame(maxWidth: .infinity)
+                .transition(.move(edge: .bottom))
             }
         }
         .sheet(isPresented: $isNaming) {
@@ -86,7 +104,15 @@ struct TextInput: View {
             
             if parts.count == 2 {
                 let clue = parts[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                    .replacingOccurrences(of: "\"", with: "")
+                    .replacingOccurrences(of: "'", with: "")
+                    .replacingOccurrences(of: "“", with: "")
+                    .replacingOccurrences(of: "”", with: "")
                 let answer = parts[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                    .replacingOccurrences(of: "\"", with: "")
+                    .replacingOccurrences(of: "'", with: "")
+                    .replacingOccurrences(of: "“", with: "")
+                    .replacingOccurrences(of: "”", with: "")
                 
                 let newCard = FlashcardModel(
                     clue: clue,
