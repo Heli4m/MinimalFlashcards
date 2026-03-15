@@ -4,7 +4,7 @@ A minimalist, gesture-driven flashcard study app built for speed and accuracy. N
 
 | Create Deck | Deck List | Flashcards |
 | :---: | :---: | :---: |
-| <img width="201" height="437" alt="Simulator Screenshot - iPhone 17 - 2026-02-15 at 16 17 21" src="https://github.com/Heli4m/MinimalFlashcards/blob/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-03-15%20at%2018.45.59.png?raw=true" /> | <img width="201" height="437" alt="Simulator Screenshot - iPhone 17 - 2026-02-15 at 16 14 38" src="https://github.com/Heli4m/MinimalFlashcards/blob/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-03-15%20at%2018.47.26.png?raw=true" /> | <img width="201" height="437" alt="Simulator Screenshot - iPhone 17 - 2026-02-15 at 16 16 56" src="https://github.com/Heli4m/MinimalFlashcards/blob/main/Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202026-03-15%20at%2018.49.12.png?raw=true" /> |
+| <img width="201" alt="Create Deck" src="Assets/create_deck.png" /> | <img width="201" alt="Deck List" src="Assets/deck_list.png" /> | <img width="201" alt="Study Mode" src="Assets/study_mode.png" /> |
 
 <br>
 
