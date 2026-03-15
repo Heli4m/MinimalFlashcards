@@ -37,44 +37,16 @@ struct TextInput: View {
                 
                 HStack {
                     Button {
-                        pasteText()
-                    } label: {
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(Config.Colors.item)
-                            .frame(width: 70, height: 70)
-                            .overlay {
-                                Image(systemName: "clipboard")
-                                    .font(.system(size: 30))
-                                    .foregroundStyle(Config.Colors.primaryText)
-                            }
-                    }
-                    .padding(.trailing, 2)
-                    
-                    Button {
                         gatherText()
                     } label: {
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundStyle(Config.Colors.accent)
                             .frame(width: 175, height: 75)
                             .overlay {
-                                LexendMediumText(text: "Submit", size: 30)
+                                LexendMediumText(text: editingDeck == nil ? "Create" : "Update", size: 30)
                                     .foregroundStyle(error ? Config.Colors.highPriority : Config.Colors.primaryText)
                             }
                     }
-                    
-                    Button {
-                        showingAlert = true
-                    } label: {
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(Config.Colors.highPriority)
-                            .frame(width: 70, height: 70)
-                            .overlay {
-                                Image(systemName: "trash")
-                                    .font(.system(size: 30))
-                                    .foregroundStyle(Config.Colors.primaryText)
-                            }
-                    }
-                    .padding(.leading, 2)
                 }
                 .padding(.top)
             }
@@ -154,17 +126,77 @@ struct TextInput: View {
 
 private extension TextInput {
     var textInput: some View {
-        TextEditor(text: $text)
-            .font(.body)
-            .foregroundStyle(Config.Colors.primaryText)
-            .frame(minHeight: 200)
-            .frame(width: 330)
-            .padding()
-            .scrollContentBackground(.hidden)
-            .background {
-                RoundedRectangle(cornerRadius: 30)
-                    .foregroundStyle(Config.Colors.item)
+        ZStack {
+            TextEditor(text: $text)
+                .font(.body)
+                .foregroundStyle(Config.Colors.primaryText)
+                .frame(minHeight: 200)
+                .frame(width: 330)
+                .padding()
+                .scrollContentBackground(.hidden)
+                .background {
+                    RoundedRectangle(cornerRadius: 30)
+                        .foregroundStyle(Config.Colors.item)
+                }
+            
+            HStack {
+                Spacer()
+                VStack {
+                    Button {
+                        showingAlert = true
+                    } label: {
+                        Circle()
+                            .foregroundStyle(Config.Colors.highPriority)
+                            .frame(width: 45, height: 45)
+                            .overlay {
+                                Image(systemName: "trash")
+                                    .font(.system(size: 20))
+                                    .foregroundStyle(Config.Colors.primaryText)
+                            }
+                            .overlay {
+                                Circle()
+                                    .stroke(Config.Colors.background, lineWidth: 2)
+                            }
+                    }
+                    
+                    Button {
+                        pasteText()
+                    } label: {
+                        Circle()
+                            .foregroundStyle(Config.Colors.item)
+                            .frame(width: 45, height: 45)
+                            .overlay {
+                                Image(systemName: "clipboard")
+                                    .font(.system(size: 20))
+                                    .foregroundStyle(Config.Colors.primaryText)
+                            }
+                            .overlay {
+                                Circle()
+                                    .stroke(Config.Colors.background, lineWidth: 2)
+                            }
+                    }
+                    
+                    Button {
+                        editingDeck = nil
+                    } label: {
+                        Circle()
+                            .foregroundStyle(editingDeck == nil ? Config.Colors.inactiveAccent : Config.Colors.accent)
+                            .frame(width: 45, height: 45)
+                            .overlay {
+                                Image(systemName: "plus.square.fill.on.square.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundStyle(Config.Colors.primaryText)
+                            }
+                            .overlay {
+                                Circle()
+                                    .stroke(Config.Colors.background, lineWidth: 2)
+                            }
+                    }
+                    .disabled(editingDeck == nil)
+                }
+                .padding(.trailing, 5)
             }
+        }
     }
 }
 
