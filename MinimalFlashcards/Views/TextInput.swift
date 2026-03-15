@@ -56,17 +56,16 @@ struct TextInput: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                     
-                HStack {
-                    Button ("Done") {
-                        isInputActive = false
-                    }
-                    .font(Font.custom("Lexend-Medium", size: 16))
-                    .foregroundStyle(Config.Colors.accent)
+                Button {
+                    isInputActive = false
+                } label: {
+                    Text("Done")
+                        .font(.body.weight(.medium))
+                        .foregroundStyle(Config.Colors.accent)
+                        .padding(.horizontal, 100)
+                        .padding(.vertical, 12)
+                        .contentShape(Rectangle())
                 }
-                .frame(maxWidth: .infinity)
-                .transition(.move(edge: .bottom))
             }
         }
         .sheet(isPresented: $isNaming) {

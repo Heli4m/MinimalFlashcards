@@ -10,10 +10,13 @@ import SwiftUI
 struct ContentView: View {
     @State private var textInput: String = ""
     @State private var decks: [DeckModel] = []
+    
     @State private var editingDeck: UUID? = nil
     @State private var activeDeck: UUID? = nil
+    
     @State private var flashCards: [FlashcardModel] = []
     @State private var storedflashCards: [FlashcardModel] = []
+    @State private var wrongflashCards: [FlashcardModel] = []
     @State private var selectedTab: TabEnum = .createPage
     
     var body: some View {
@@ -61,8 +64,9 @@ struct ContentView: View {
             
             
             FlashcardPage(
+                wrongflashCards: $wrongflashCards,
                 flashCards: $flashCards,
-                storedflashCards: $storedflashCards
+                storedflashCards: $storedflashCards,
             ) { percentage in
                 if let index = decks.firstIndex(where: { $0.id == activeDeck }) {
                     if percentage > decks[index].personalBest {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FlashcardPage: View {
+    @Binding var wrongflashCards: [FlashcardModel]
     @Binding var flashCards: [FlashcardModel]
     @Binding var storedflashCards: [FlashcardModel]
     @State private var wrongCount: Int = 0
@@ -75,11 +76,15 @@ struct FlashcardPage: View {
                             SwipeWrapper(
                                 wrongCount: $wrongCount,
                                 correctCount: $correctCount,
-                                onRemove: {
+                                onRemove: { correct in
                                     withAnimation(.spring) {
                                         if let index = flashCards.firstIndex(where: { $0.id == card.id }) {
                                             flashCards.remove(at: index)
                                         }
+                                    }
+                                    
+                                    if !correct {
+                                        
                                     }
                                 }) {
                                     Flashcard(
@@ -97,6 +102,7 @@ struct FlashcardPage: View {
 
 #Preview {
     FlashcardPage(
+        wrongflashCards: .constant([]),
         flashCards: .constant([]),
         storedflashCards: .constant([
             FlashcardModel(clue: "Hello", answer: "Bonjour"),

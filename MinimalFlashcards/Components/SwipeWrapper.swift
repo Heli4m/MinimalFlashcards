@@ -10,7 +10,7 @@ import SwiftUI
 struct SwipeWrapper<Content: View>: View {
     @Binding var wrongCount: Int
     @Binding var correctCount: Int
-    var onRemove: () -> Void
+    var onRemove: (Bool) -> Void
     let content: () -> Content
     @State private var hasPlayedHaptics: Bool = false
     
@@ -50,10 +50,11 @@ struct SwipeWrapper<Content: View>: View {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                     if value.translation.width > 100 {
                                         correctCount += 1
+                                        onRemove(true)
                                     } else if value.translation.width < -100 {
                                         wrongCount += 1
+                                        onRemove(false)
                                     }
-                                    onRemove()
                                     offset = .zero
                                 }
                                 
